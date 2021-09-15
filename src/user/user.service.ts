@@ -7,12 +7,13 @@ import { CreateUniqueID } from './services/CreateUniqueID.service';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(
+    private prisma: PrismaClient,
+    private createUniqueID: CreateUniqueID,
+  ) {}
 
   async create(createUserDto: CreateUserDTO): Promise<User> {
-    const createUniqueID = new CreateUniqueID();
-    const { uuid } = createUniqueID.execute();
-
+    const { uuid } = this.createUniqueID.execute();
     const user = await this.prisma.user.create({
       data: {
         id: uuid,
