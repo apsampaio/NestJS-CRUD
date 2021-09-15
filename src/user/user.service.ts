@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDTO } from './dto/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import { PrismaClient, User } from '.prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 import { CreateUniqueID } from './services/CreateUniqueID.service';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class UserService {
     private createUniqueID: CreateUniqueID,
   ) {}
 
-  async create(createUserDto: CreateUserDTO): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     const { uuid } = this.createUniqueID.execute();
     const user = await this.prisma.user.create({
       data: {
