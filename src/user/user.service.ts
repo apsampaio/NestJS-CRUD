@@ -19,7 +19,7 @@ export class UserService {
 
     const { hashed_password } = await this.hashPassword.execute({ password });
 
-    return await this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         id: uuid,
         password: hashed_password,
@@ -28,6 +28,10 @@ export class UserService {
         admin,
       },
     });
+
+    delete user.password;
+
+    return user;
   }
 
   findAll() {
